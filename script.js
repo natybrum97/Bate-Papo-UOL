@@ -73,6 +73,7 @@ function receberResposta() {
 
 function deuErro(erro) {
     alert("Conecte-se novamente com outro nome")
+    window.location.reload()
     console.error('Ocorreu um erro ao enviar o usuário:', erro);
 }
 
@@ -167,3 +168,12 @@ function escreverMensagem() {
 }
     setInterval(mandarStatus,5000)
     setInterval(receberResposta, 3000)
+
+    function enviarMensagem(event) {
+        if (event.keyCode === 13) { // 13 é o código da tecla "Enter"
+          const mensagem = document.getElementById("mensagem").value;
+          // Aqui você pode chamar a função que envia a mensagem
+          console.log("Mensagem enviada: " + mensagem);
+          event.preventDefault(); // Evita que o caractere de nova linha seja inserido no campo de entrada
+        }
+      }
