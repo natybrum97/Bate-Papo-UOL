@@ -1,49 +1,51 @@
-//function fornecerNome (){
-//const desaparecediv = document.querySelector(".nome1")
-//if (desaparecediv.value != ""){
-//nome = document.querySelector(".maior");
-//nome.classList.add("display");
-//} else {
-//    nome = document.querySelector(".maior");
-//    nome.classList.remove("display");
-//}
-//}
+function fornecerNome (){
+const desaparecediv = document.querySelector(".nome1")
+if (desaparecediv.value != ""){
+nome = document.querySelector(".maior");
+nome.classList.add("display");
+} else {
+   nome = document.querySelector(".maior");
+   nome.classList.remove("display");
+}
+}
 
-//function sidebarAparece () {
-//    const aparece = document.querySelector(".transparencia");
-//    aparece.classList.toggle("display")
+function sidebarAparece () {
+   const aparece = document.querySelector(".transparencia");
+   aparece.classList.toggle("display")
 
-//    const sidebar1 = document.querySelector(".sidebar")
-//    sidebar1.style.right = "0px";
-//}
+   const sidebar1 = document.querySelector(".sidebar")
+   sidebar1.style.right = "0px";
+}
 
-//function voltarMensagens () {
-//    const voltar = document.querySelector(".transparencia");
-//    voltar.classList.add("display");
+function voltarMensagens () {
+   const voltar = document.querySelector(".transparencia");
+   voltar.classList.add("display");
 
-//    const sidebar2 = document.querySelector(".sidebar")
-//    sidebar2.style.right = "-259px";
-//}
-//function selecionarVisibilidade(event) {
-//    const publico = document.querySelector('.publico');
-//    const reservado = document.querySelector('.reservado');
-//    const checkIcons = document.querySelectorAll('.check');
-//    const checkIconPublico = publico.querySelector('.check');
-//    const checkIconReservado = reservado.querySelector('.check');
+   const sidebar2 = document.querySelector(".sidebar")
+   sidebar2.style.right = "-259px";
+}
+function selecionarVisibilidade(elemento) {
+    const publico = document.querySelector('.publico');
+    const reservado = document.querySelector('.reservado');
+    const checkIcons = document.querySelectorAll('.check');
+   const checkIconPublico = publico.querySelector('.check');
+   const checkIconReservado = reservado.querySelector('.check');
   
     // Remove a classe 'selecionado' de todos os ícones de check
-//    checkIcons.forEach(icon => icon.classList.remove('selecionado'));
+   checkIcons.forEach(icon => icon.classList.remove('selecionado'));
   
     // Adiciona a classe 'selecionado' ao ícone de check do elemento clicado
-//    if (event.target.parentNode.classList.contains('publico')) {
-//      checkIconPublico.classList.add('selecionado');
-//    } else {
-//      checkIconReservado.classList.add('selecionado');
-//    }
-//  }
+    console.log(event)
+   if (elemento.classList.contains('publico')) {
+     checkIconPublico.classList.add('selecionado');
+   } else {
+     checkIconReservado.classList.add('selecionado');
+   }
+ }
   
   axios.defaults.headers.common['Authorization'] = 'zucvAcqdwYADeqdgfJUPWKEv';
   let ListaDeMensagens;
+  var nome = "";
   
   function adicionarUsuario() {
     let qualNome = prompt("Digite seu nome");
@@ -51,6 +53,7 @@
     const novoUsuario = {
       name: qualNome
     };
+    nome = qualNome;
     console.log(novoUsuario)
     const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', novoUsuario);
     promessa.then(receberResposta);
@@ -75,6 +78,16 @@ function processarResposta(resposta) {
     console.log(resposta.data);
     renderizarMensagens(resposta.data)
 }
+
+function mandarStatus(qualNome) {
+   const novoUsuario = {
+      name: qualNome
+    };
+    console.log(novoUsuario)
+    const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/status', novoUsuario);
+    promessa.then(receberResposta);
+    promessa.catch(deuErro);
+  }
 
 console.log("Enviou a requisição"); // Esse console.log disparará primeiro
 
@@ -126,5 +139,21 @@ function renderizarMensagens(ListaDeMensagens){
         `;
     }
 }
+}
+mandarStatus(nome);
+
+function escreverMensagem(){
+
+    // pegar os dados que foram digitados pelo usuario nos inputs e textareas
+    const mensagem = document.querySelector('.escrever');
+
+    // criar um novo objeto com os dados da receita
+
+    const mensagemEnviada = {
+        from: nome,
+        to: "Todos",
+        text: mensagem.value,
+        type: "message" // ou "private_message" para o bônus
+    }
 }
   

@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<!--<div class="maior">
+<!-- <div class="maior">
     <div class="quadrado1">
         <img class="logo1" src="./imagens/logo 2.png" />
     </div>
@@ -41,6 +41,7 @@
         <div class="button1" onclick="fornecerNome ()">Entrar</div>
     </div>
 </div> 
+-->
 
 <div class="transparencia display" onclick="voltarMensagens ()"></div>
 
@@ -61,14 +62,14 @@
         </div>
     </div>
     <div class="titulo1">Escolha a visibilidade:</div>
-    <div class="publico" onclick="selecionarVisibilidade (event)">
+    <div class="publico" onclick="selecionarVisibilidade (this)">
         <ion-icon class="icone3" name="lock-open"></ion-icon>
         <div class="tamanho1">
             <p class="fonte">Público</p>
             <ion-icon class="check" name="checkmark-sharp"></ion-icon>
         </div>
     </div>
-    <div class="reservado" onclick="selecionarVisibilidade (event)">
+    <div class="reservado" onclick="selecionarVisibilidade (this)">
         <ion-icon class="icone3" name="lock-closed"></ion-icon>
         <div class="tamanho1">
             <p class="fonte">Reservadamente</p>
@@ -76,8 +77,6 @@
         </div>
     </div>
 </div>
-
--->
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
