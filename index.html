@@ -20,15 +20,17 @@
         <ion-icon class="icone1" onclick="sidebarAparece ()" name="people-sharp"></ion-icon>
     </div>
 </div>
-<div class="corpo"></div>
+<div class="corpo">
+    <ul class="mensagens"></ul>
+</div>
 <div class="footer">
     <div class="central1">
-        <textarea class="escrever">Escreva aqui...</textarea>
-        <ion-icon class="icone2" name="paper-plane-outline"></ion-icon>
+        <input data-test="input-message" type="text" class="escrever" placeholder="Escreva aqui...">
+        <ion-icon data-test="send-message" class="icone2" name="paper-plane-outline"></ion-icon>
     </div>
 </div>
 
-<div class="maior">
+<!--<div class="maior">
     <div class="quadrado1">
         <img class="logo1" src="./imagens/logo 2.png" />
     </div>
@@ -38,7 +40,7 @@
     <div class="button">
         <div class="button1" onclick="fornecerNome ()">Entrar</div>
     </div>
-</div>
+</div> 
 
 <div class="transparencia display" onclick="voltarMensagens ()"></div>
 
@@ -75,6 +77,9 @@
     </div>
 </div>
 
+-->
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
    <script src="./script.js"></script>
 
