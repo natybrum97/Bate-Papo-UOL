@@ -42,69 +42,73 @@ function selecionarVisibilidade(elemento) {
      checkIconReservado.classList.add('selecionado');
    }
  }
-  
-  axios.defaults.headers.common['Authorization'] = 'zucvAcqdwYADeqdgfJUPWKEv';
-  let ListaDeMensagens;
-  var nome = "";
-  
-  function adicionarUsuario() {
+
+axios.defaults.headers.common['Authorization'] = 'zucvAcqdwYADeqdgfJUPWKEv';
+var ListaDeMensagens;
+var nome = "";
+
+function adicionarUsuario() {
     let qualNome = prompt("Digite seu nome");
-  
+
     const novoUsuario = {
-      name: qualNome
+        name: qualNome
     };
     nome = qualNome;
     console.log(novoUsuario)
     const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', novoUsuario);
     promessa.then(receberResposta);
     promessa.catch(deuErro);
-  }
-
-  adicionarUsuario();
-  
-  function receberResposta(resposta) {
-    console.log(`O usuário foi salvo com sucesso!`);
-    console.log(resposta);
-    const promessa = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
-  promessa.then(processarResposta);
-  }
-  
-  function deuErro(erro) {
-    console.error('Ocorreu um erro ao enviar o usuário:', erro);
-  }
-
-function processarResposta(resposta) {
-	console.log("Voltou a resposta"); // Esse console.log disparará depois
-    console.log(resposta.data);
-    renderizarMensagens(resposta.data)
 }
 
-function mandarStatus(qualNome) {
-   const novoUsuario = {
-      name: qualNome
+adicionarUsuario();
+
+function receberResposta(resposta) {
+    console.log(`O usuário foi salvo com sucesso!`);
+    const promessa = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
+    console.log(resposta);
+    promessa.then((Resposta) => {
+    ListaDeMensagens = Resposta.data;
+    processarResposta(Resposta)
+    setInterval(mandarStatus,5000)
+    setInterval(() => {renderizarMensagens(resposta.data)}, 3000)
+    });
+}
+
+function deuErro(erro) {
+    console.error('Ocorreu um erro ao enviar o usuário:', erro);
+}
+
+function processarResposta(resposta) {
+    console.log("Voltou a resposta"); // Esse console.log disparará depois
+    console.log(resposta.data);
+    renderizarMensagens(resposta.data)
+    
+}
+
+function mandarStatus() {
+    const novoUsuario = {
+        name: nome
     };
     console.log(novoUsuario)
     const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/status', novoUsuario);
-    promessa.then(receberResposta);
-    promessa.catch(deuErro);
-  }
+    promessa.then(() => { console.log("Mantendo a conexão") })
+}
 
 console.log("Enviou a requisição"); // Esse console.log disparará primeiro
 
-function renderizarMensagens(ListaDeMensagens){
+function renderizarMensagens() {
 
     // pegar a lista ul no html
     const ulmensagens = document.querySelector('.corpo .mensagens');
     ulmensagens.innerHTML = '';
 
     // percorrer a minha lista de mensagens
-    for( let i = 0; i < ListaDeMensagens.length; i++){
+    for (let i = 0; i < ListaDeMensagens.length; i++) {
         // pegar mensagem por mensagem
-        let mensagem = ListaDeMensagens[i];
-        
+
         // criar um elemento <li>] e adicionar no meu elemento <ul>
-        if (ListaDeMensagens[i].type === "status"){
-        ulmensagens.innerHTML += `
+        if (ListaDeMensagens[i].type === "status") {
+            ulmensagens.innerHTML += `
             <li data-test="message" class="messenger">
             <div data-test="message" class="messenger1">
             <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
@@ -113,8 +117,8 @@ function renderizarMensagens(ListaDeMensagens){
             </div>
             </li>
         `;
-    } else if (ListaDeMensagens[i].type === "message"){
-        ulmensagens.innerHTML += `
+        } else if (ListaDeMensagens[i].type === "message") {
+            ulmensagens.innerHTML += `
         <li data-test="message" class="messenger6">
         <div data-test="message" class="messenger7">
         <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
@@ -125,8 +129,8 @@ function renderizarMensagens(ListaDeMensagens){
         </div>
         </li> 
         `;
-    } else {
-        ulmensagens.innerHTML += `
+        } else {
+            ulmensagens.innerHTML += `
         <li data-test="message" class="messenger8">
         <div data-test="message" class="messenger9">
         <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
@@ -137,12 +141,11 @@ function renderizarMensagens(ListaDeMensagens){
         </div>
         </li> 
         `;
+        }
     }
 }
-}
-mandarStatus(nome);
 
-function escreverMensagem(){
+function escreverMensagem() {
 
     // pegar os dados que foram digitados pelo usuario nos inputs e textareas
     const mensagem = document.querySelector('.escrever');
@@ -155,5 +158,10 @@ function escreverMensagem(){
         text: mensagem.value,
         type: "message" // ou "private_message" para o bônus
     }
+    let promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', mensagemEnviada)
+    promessa.then(() => {
+        renderizarMensagens()
+        mensagem.value = "";
+    })
+    promessa.catch(deuErro);
 }
-  

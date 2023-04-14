@@ -31,8 +31,9 @@ body{
 }
 .corpo {
     width: 375px;
-    height: 507px;
+    height: auto;
     background-color: #F3F3F3;
+    margin-bottom:100px;
 }
 .footer {
     width: 375px;
