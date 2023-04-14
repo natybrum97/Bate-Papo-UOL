@@ -108,34 +108,34 @@ function renderizarMensagens() {
         if (ListaDeMensagens[i].type === "status") {
             ulmensagens.innerHTML += `
             <li data-test="message" class="messenger">
-            <div data-test="message" class="messenger1">
-            <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
-            <div data-test="message" class="messenger3">${ListaDeMensagens[i].from}</div>
-            <div data-test="message" class="messenger4">${ListaDeMensagens[i].text}</div>
+            <div class="messenger1">
+            <div class="messenger2">(${ListaDeMensagens[i].time})</div>
+            <div class="messenger3">${ListaDeMensagens[i].from}</div>
+            <div class="messenger4">${ListaDeMensagens[i].text}</div>
             </div>
             </li>
         `;
         } else if (ListaDeMensagens[i].type === "message") {
             ulmensagens.innerHTML += `
         <li data-test="message" class="messenger6">
-        <div data-test="message" class="messenger7">
-        <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
-        <div data-test="message" class="messenger3">${ListaDeMensagens[i].from}</div>
-        <p data-test="message">para</p>
-        <div data-test="message" class="messenger5">${ListaDeMensagens[i].to}:</div>
-        <div data-test="message" class="messenger4">${ListaDeMensagens[i].text}</div>
+        <div class="messenger7">
+        <div class="messenger2">(${ListaDeMensagens[i].time})</div>
+        <div class="messenger3">${ListaDeMensagens[i].from}</div>
+        <p>para</p>
+        <div class="messenger5">${ListaDeMensagens[i].to}:</div>
+        <div class="messenger4">${ListaDeMensagens[i].text}</div>
         </div>
         </li> 
         `;
         } else {
             ulmensagens.innerHTML += `
         <li data-test="message" class="messenger8">
-        <div data-test="message" class="messenger9">
-        <div data-test="message" class="messenger2">(${ListaDeMensagens[i].time})</div>
-        <div data-test="message" class="messenger3">${ListaDeMensagens[i].from}</div>
-        <p data-test="message">reservadamente para</p>
-        <div data-test="message" class="messenger3">${ListaDeMensagens[i].to}:</div>
-        <div data-test="message" class="messenger4">${ListaDeMensagens[i].text}</div>
+        <div class="messenger9">
+        <div class="messenger2">(${ListaDeMensagens[i].time})</div>
+        <div class="messenger3">${ListaDeMensagens[i].from}</div>
+        <p>reservadamente para</p>
+        <div class="messenger3">${ListaDeMensagens[i].to}:</div>
+        <div class="messenger4">${ListaDeMensagens[i].text}</div>
         </div>
         </li> 
         `;
