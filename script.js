@@ -62,26 +62,24 @@ function adicionarUsuario() {
 
 adicionarUsuario();
 
-function receberResposta(resposta) {
+function receberResposta() {
     console.log(`O usuário foi salvo com sucesso!`);
     const promessa = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
-    console.log(resposta);
     promessa.then((Resposta) => {
     ListaDeMensagens = Resposta.data;
     processarResposta(Resposta)
-    setInterval(mandarStatus,5000)
-    setInterval(() => {renderizarMensagens(resposta.data)}, 3000)
     });
 }
 
 function deuErro(erro) {
+    alert("Conecte-se novamente com outro nome")
     console.error('Ocorreu um erro ao enviar o usuário:', erro);
 }
 
 function processarResposta(resposta) {
     console.log("Voltou a resposta"); // Esse console.log disparará depois
     console.log(resposta.data);
-    renderizarMensagens(resposta.data)
+    renderizarMensagens()
     
 }
 
@@ -160,8 +158,12 @@ function escreverMensagem() {
     }
     let promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', mensagemEnviada)
     promessa.then(() => {
-        renderizarMensagens()
+        receberResposta()
         mensagem.value = "";
     })
-    promessa.catch(deuErro);
+    promessa.catch(() => {
+        alert("Você está desconectado! Conecte-se novamente.")
+        window.location.reload()});
 }
+    setInterval(mandarStatus,5000)
+    setInterval(receberResposta, 3000)
