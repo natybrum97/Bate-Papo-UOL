@@ -73,8 +73,8 @@ function receberResposta() {
 
 function deuErro(erro) {
     alert("Conecte-se novamente com outro nome")
-    window.location.reload()
     console.error('Ocorreu um erro ao enviar o usuário:', erro);
+    window.location.reload()
 }
 
 function processarResposta(resposta) {
@@ -168,12 +168,75 @@ function escreverMensagem() {
 }
     setInterval(mandarStatus,5000)
     setInterval(receberResposta, 3000)
+    setInterval(apareceUsuários, 10000)
 
-    function enviarMensagem(event) {
-        if (event.keyCode === 13) { // 13 é o código da tecla "Enter"
-          const mensagem = document.getElementById("mensagem").value;
-          // Aqui você pode chamar a função que envia a mensagem
-          console.log("Mensagem enviada: " + mensagem);
-          event.preventDefault(); // Evita que o caractere de nova linha seja inserido no campo de entrada
+    function apareceUsuários () {
+        const promessa = axios.get('https://mock-api.driven.com.br/api/vm/uol/participants');
+        console.log(promessa)
+        promessa.then((Resposta) => {
+            ListadeParticipantes = Resposta.data;
+            processarResposta1(Resposta)
+            });
+        promessa.catch(deuErro1);
+    }
+    apareceUsuários ()
+
+    function deuErro1(erro) {
+        console.error('Ocorreu um erro ao enviar a lista de participantes:', erro);
+    }
+    function processarResposta1(resposta) {
+        console.log(`A lista de participantes está disponível!`);
+        console.log(resposta.data);
+        renderizarParticipantes()
+    }
+
+    function renderizarParticipantes() {
+        const ulparticipantes = document.querySelector('.sidebar .participantes');
+        ulparticipantes.innerHTML = ''; 
+
+        for (let i = 0; i < ListadeParticipantes.length; i++) {
+
+            ulparticipantes.innerHTML += `
+            <li data-test="participant" class="todos">
+                <ion-icon class="fonte2" name="person-circle"></ion-icon>
+                <div class="tamanho1">
+                <p class="fonte">${ListadeParticipantes[i].name}</p>
+                 <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+                </div>
+            </li>
+        `;
+
         }
+    }
+
+    const input = document.querySelector('.escrever');
+
+    input.addEventListener('keydown', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        escreverMensagem1()
       }
+    });
+    
+    
+    function escreverMensagem1() {
+        const mensagem1 = input.value;
+        const mensagem = document.querySelector('.escrever');
+    
+        // criar um novo objeto com os dados da receita
+    
+        const mensagemEnviada = {
+            from: nome,
+            to: "Todos",
+            text: input.value,
+            type: "message" // ou "private_message" para o bônus
+        }
+        let promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', mensagemEnviada)
+        promessa.then(() => {
+            receberResposta()
+            mensagem.value = "";
+        })
+        promessa.catch(() => {
+            alert("Você está desconectado! Conecte-se novamente.")
+            window.location.reload()});
+    }

@@ -17,7 +17,7 @@
 <div class="cabecalho">
     <div class="central">
         <img class="logo" src="./imagens/logo 2.png" />
-        <ion-icon class="icone1" onclick="sidebarAparece ()" name="people-sharp"></ion-icon>
+        <ion-icon data-test="open-participants" class="icone1" onclick="sidebarAparece ()" name="people-sharp"></ion-icon>
     </div>
 </div>
 <div class="corpo">
@@ -25,7 +25,7 @@
 </div>
 <div class="footer">
     <div class="central1">
-        <input data-test="input-message" type="text" class="escrever" placeholder="Escreva aqui..." id="mensagem" onkeydown="enviarMensagem(event)">
+        <input data-test="input-message" type="text" class="escrever" placeholder="Escreva aqui...">
         <ion-icon data-test="send-message" class="icone2" name="paper-plane-outline" onclick="escreverMensagem()"></ion-icon>
     </div>
 </div>
@@ -43,37 +43,33 @@
 </div> 
 -->
 
-<div class="transparencia display" onclick="voltarMensagens ()"></div>
+<div atributo data-test="overlay" class="transparencia display" onclick="voltarMensagens ()"></div>
 
 <div class="sidebar">
     <div class="titulo">Escolha um contato <br> para enviar mensagem:</div>
-    <div class="todos">
+    <div data-test="all" class="todos">
         <ion-icon class="fonte1" name="people-sharp"></ion-icon>
         <div class="tamanho1">
             <p class="fonte">Todos</p>
             <ion-icon class="check" name="checkmark-sharp"></ion-icon>
         </div>
     </div>
-    <div class="todos">
-        <ion-icon class="fonte2" name="person-circle"></ion-icon>
-        <div class="tamanho1">
-            <p class="fonte">João</p>
-            <ion-icon class="check" name="checkmark-sharp"></ion-icon>
-        </div>
-    </div>
+    
+    <ul class="participantes"></ul>
+    
     <div class="titulo1">Escolha a visibilidade:</div>
-    <div class="publico" onclick="selecionarVisibilidade (this)">
+    <div data-test="public" class="publico" onclick="selecionarVisibilidade (this)">
         <ion-icon class="icone3" name="lock-open"></ion-icon>
         <div class="tamanho1">
             <p class="fonte">Público</p>
-            <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+            <ion-icon data-test="check" class="check" name="checkmark-sharp"></ion-icon>
         </div>
     </div>
-    <div class="reservado" onclick="selecionarVisibilidade (this)">
+    <div data-test="private" class="reservado" onclick="selecionarVisibilidade (this)">
         <ion-icon class="icone3" name="lock-closed"></ion-icon>
         <div class="tamanho1">
             <p class="fonte">Reservadamente</p>
-            <ion-icon class="check" name="checkmark-sharp"></ion-icon>
+            <ion-icon data-test="check" class="check" name="checkmark-sharp"></ion-icon>
         </div>
     </div>
 </div>
